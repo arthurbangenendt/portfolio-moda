@@ -4,11 +4,11 @@ Primeira versão local, criada a partir das cinco imagens enviadas em 16/10/2026
 
 ## Estrutura
 
-- Hero de rolagem longa: a imagem atual será substituída pelo vídeo de Ana Clara.
-- Biografia em primeira pessoa sobre o retrato de Ana Clara, com camadas em movimento na rolagem. Texto provisório baseado apenas nos dados enviados.
-- Projeto 01: moldes, moulage e protótipo de blazer.
-- Projeto 02: moldes e construção de calça de alfaiataria.
-- Interlúdio visual entre os dois projetos.
+- Hero de rolagem longa com retrato, apresentação e visão em camadas. O vídeo enviado depois substituirá o retrato como fundo.
+- Seção de processo com três etapas e explicações breves.
+- Projeto 01: moldes, moulage e protótipo de blazer, com legendas específicas.
+- Projeto 02: moldes e construção de calça de alfaiataria, com legendas específicas.
+- Direção visual em preto, branco e cinzas quentes.
 
 ## Próximos materiais
 
