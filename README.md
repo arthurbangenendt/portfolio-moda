@@ -8,7 +8,7 @@ Primeira versão local, criada a partir das cinco imagens enviadas em 16/10/2026
 - Seção de processo com três etapas e explicações breves.
 - Projeto 01: moldes, moulage e protótipo de blazer, com legendas específicas.
 - Projeto 02: moldes e construção de calça de alfaiataria, com legendas específicas.
-- Direção visual em preto, branco e cinzas quentes.
+- Direção visual em amarelo, manteiga e marrom; as fotos mantêm as cores originais.
 
 ## Próximos materiais
 
@@ -19,4 +19,12 @@ Primeira versão local, criada a partir das cinco imagens enviadas em 16/10/2026
 
 Quando o vídeo chegar, copiar para `dist/assets/hero.mp4`, definir `src="assets/hero.mp4"` em `#hero-video` no `dist/index.html`, testar reprodução, enquadramento, velocidade e legibilidade da Hero.
 
-O site ainda não foi publicado. Os arquivos prontos para prévia local estão em `dist/`.
+## Publicação
+
+O site está publicado em https://ana-clara-portfolio-nine.vercel.app. O projeto
+`ana-clara-portfolio` está conectado ao repositório GitHub `portfolio-moda` na
+Vercel. A pasta `dist/` é publicada diretamente, sem etapa de build.
+
+Para publicar as alterações desta pasta manualmente em produção, execute
+`vercel deploy --prod`. Commits enviados ao GitHub também geram deploys
+automáticos; as alterações locais só entram nesse fluxo depois de commit e push.
