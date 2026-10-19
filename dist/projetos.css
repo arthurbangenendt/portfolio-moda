@@ -203,3 +203,11 @@ body.project-page{background:var(--page-bg);color:var(--page-ink)}
 
 /* Folhas secas e girassóis caindo pela página inicial (folhas.js). Não capturam cliques. */
 .leaf-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:15;pointer-events:none}
+
+/* Couro granulado nas áreas amarelas: relevo gerado em SVG (sem imagem), já clareado para
+   escurecer o amarelo só um pouco ao ser multiplicado sobre a cor de fundo. */
+:root{--couro:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.19' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeDiffuseLighting lighting-color='%23ffffff' surfaceScale='1.9' diffuseConstant='1.12'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.36' intercept='0.64'/%3E%3CfeFuncG type='linear' slope='0.36' intercept='0.64'/%3E%3CfeFuncB type='linear' slope='0.36' intercept='0.64'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E")}
+body:not(.project-page),.page-blazer,.page-calca,.page-blazer .page-masthead,.page-calca .page-masthead{background-image:var(--couro);background-blend-mode:multiply}
+.process-section{background-image:var(--couro),linear-gradient(180deg,var(--butter),var(--butter-low));background-blend-mode:multiply,normal}
+.work-index{background-image:var(--couro),linear-gradient(180deg,var(--butter-deep),var(--butter-deep-low));background-blend-mode:multiply,normal}
+.project-blazer{background-image:var(--couro),linear-gradient(180deg,var(--butter-soft),var(--butter) 55%,var(--butter-low));background-blend-mode:multiply,normal}
