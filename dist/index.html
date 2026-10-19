@@ -3,11 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#e9e5dc" />
+    <meta name="theme-color" content="#ecd898" />
     <meta name="description" content="Portfólio de moda de Ana Clara. Estudos de modelagem, moulage e alfaiataria." />
     <title>Ana Clara — Portfólio de moda</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="projetos.css" />
   </head>
   <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
@@ -25,8 +26,8 @@
     <main id="conteudo">
       <section class="hero" id="inicio" aria-labelledby="hero-title">
         <div class="hero-stage">
-          <div class="hero-media" role="img" aria-label="Retrato em preto e branco de Ana Clara">
-            <video id="hero-video" class="hero-video" muted loop playsinline preload="metadata" poster="assets/ana-clara-retrato.jpeg"></video>
+          <div class="hero-media" role="img" aria-label="Retrato de Ana Clara">
+            <video id="hero-video" class="hero-video" muted loop playsinline preload="metadata" poster="assets/ana-clara-retrato-4k.jpg"></video>
           </div>
           <div class="hero-shade"></div>
           <div class="hero-content">
@@ -63,46 +64,27 @@
       </section>
 
       <section class="work-index section-shell" id="trabalhos" aria-labelledby="work-title">
-        <div class="section-kicker"><span>03 / Trabalhos</span><span>Dois estudos selecionados</span></div>
+        <div class="section-kicker"><span>03 / Trabalhos</span><span>Cinco projetos selecionados</span></div>
         <h2 id="work-title">Do plano<br /><em>ao volume.</em></h2>
-        <div class="project-list">
-          <a class="project-line" href="#blazer"><span>01</span><strong>Blazer feminino</strong><small>Molde / Moulage / Protótipo</small><span aria-hidden="true">↗</span></a>
-          <a class="project-line" href="#calca"><span>02</span><strong>Calça de alfaiataria</strong><small>Molde / Construção</small><span aria-hidden="true">↗</span></a>
+        <div class="reveal" data-reveal>
+          <ul class="reveal-list">
+            <li><a class="reveal-row" href="blazer.html" data-image="assets/blazer-lista.jpg" data-fit="contain" style="--i:0"><span class="reveal-n">01</span><span class="reveal-title" data-scramble>Blazer feminino</span><span class="reveal-cat" data-scramble>Alfaiataria</span><span class="reveal-tec" data-scramble>Molde / Moulage / Protótipo</span><span class="reveal-year" data-scramble>2026</span></a></li>
+            <li><a class="reveal-row" href="calca.html" data-image="assets/calca-lista.jpg" data-fit="contain" style="--i:1"><span class="reveal-n">02</span><span class="reveal-title" data-scramble>Calça de alfaiataria</span><span class="reveal-cat" data-scramble>Modelagem</span><span class="reveal-tec" data-scramble>Molde / Construção</span><span class="reveal-year" data-scramble>2026</span></a></li>
+            <li><a class="reveal-row" href="ecos-do-baile.html" data-image="assets/ecos-rua.jpg" data-pos="center 45%" style="--i:2"><span class="reveal-n">03</span><span class="reveal-title" data-scramble>Ecos do Baile</span><span class="reveal-cat" data-scramble>Campanha</span><span class="reveal-tec" data-scramble>Editorial / Direção</span><span class="reveal-year" data-scramble>2026</span></a></li>
+            <li><a class="reveal-row" href="sunday-best.html" data-image="assets/camisa-frente.jpg" data-fit="contain" style="--i:3"><span class="reveal-n">04</span><span class="reveal-title" data-scramble>Sunday Best</span><span class="reveal-cat" data-scramble>Camisa</span><span class="reveal-tec" data-scramble>Modelagem / Costura</span><span class="reveal-year" data-scramble>2026</span></a></li>
+            <li><a class="reveal-row" href="otimismo-cetico.html" data-image="assets/otimismo-croquis.jpg" data-pos="center 30%" style="--i:4"><span class="reveal-n">05</span><span class="reveal-title" data-scramble>Otimismo Cético</span><span class="reveal-cat" data-scramble>Pesquisa</span><span class="reveal-tec" data-scramble>Tendência / Croquis</span><span class="reveal-year" data-scramble>2026</span></a></li>
+          </ul>
+          <div class="reveal-corners" aria-hidden="true">
+            <span class="reveal-square"></span>
+            <span class="reveal-hint" data-reveal-hint>Passe o mouse para ver</span>
+            <span>Senac / São Paulo</span>
+            <time class="reveal-clock" data-reveal-clock>--<b>:</b>--</time>
+          </div>
         </div>
-      </section>
-
-      <article class="project project-blazer" id="blazer" aria-labelledby="blazer-title">
-        <div class="project-lead section-shell">
-          <div class="project-number">Projeto 01 / Alfaiataria</div>
-          <h2 id="blazer-title">A linha<br />vira <em>estrutura.</em></h2>
-          <p>Um estudo de blazer feminino visto em três momentos: planejamento das partes, construção no manequim e protótipo em tecido cru.</p>
-        </div>
-        <div class="editorial-grid section-shell">
-          <figure class="photo photo-tall"><div class="photo-window"><img src="assets/blazer-moldes.png" alt="Partes do molde de blazer feminino distribuídas sobre a mesa de trabalho" loading="lazy" /></div><figcaption><span>01 / Molde plano</span><span>Partes e marcações organizam a construção antes do corte.</span></figcaption></figure>
-          <figure class="photo photo-offset"><div class="photo-window"><img src="assets/blazer-moulage.png" alt="Estudo de lapela e frente de blazer em tecido cru sobre manequim" loading="lazy" /></div><figcaption><span>02 / Moulage</span><span>A lapela é posicionada e observada em volume.</span></figcaption></figure>
-          <figure class="photo photo-wide"><div class="photo-window"><img src="assets/blazer-prototipo.png" alt="Protótipo de blazer em tecido cru montado no manequim" loading="lazy" /></div><figcaption><span>03 / Protótipo</span><span>O tecido cru evidencia proporção, encaixe e caimento.</span></figcaption></figure>
-        </div>
-      </article>
-
-      <article class="project project-calca" id="calca" aria-labelledby="calca-title">
-        <div class="project-lead section-shell">
-          <div class="project-number">Projeto 02 / Modelagem</div>
-          <h2 id="calca-title">Precisão<br /><em>em movimento.</em></h2>
-          <p>Da leitura das partes do molde à peça costurada, o estudo de calça de alfaiataria mostra a relação entre proporção, bolso e acabamento.</p>
-        </div>
-        <div class="calca-grid section-shell">
-          <figure class="photo"><div class="photo-window"><img src="assets/calca-moldes.png" alt="Moldes de calça de alfaiataria distribuídos sobre mesa de trabalho" loading="lazy" /></div><figcaption><span>01 / Modelagem</span><span>O molde reúne as partes necessárias à montagem.</span></figcaption></figure>
-          <figure class="photo"><div class="photo-window"><img src="assets/calca-prototipo.png" alt="Calça de tecido cru com detalhe de bolsos sobre a mesa" loading="lazy" /></div><figcaption><span>02 / Peça piloto</span><span>A construção revela bolsos, linhas e proporção.</span></figcaption></figure>
-        </div>
-      </article>
-
-      <section class="closing section-shell" aria-labelledby="closing-title">
-        <div class="section-kicker"><span>Ana Clara / Moda</span><span>Portfólio em desenvolvimento</span></div>
-        <p class="closing-mark" aria-hidden="true">AC.</p>
-        <h2 id="closing-title">O trabalho continua<br /><em>além destas páginas.</em></h2>
-        <footer><span>© Ana Clara, 2026</span><span>Portfólio de moda</span><a href="#inicio">Voltar ao início ↑</a></footer>
       </section>
     </main>
     <script src="script.js"></script>
+    <script src="folhas.js"></script>
+    <script src="projetos.js"></script>
   </body>
 </html>

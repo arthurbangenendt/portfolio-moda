@@ -4,6 +4,7 @@
   const video = document.querySelector('#hero-video');
   if (!hero || !stage || !video) return;
 
+  // Na rolagem da hero, a abertura sobe e esmaece e a biografia ("Minha visão") entra sobre o retrato.
   let ticking = false;
   const updateScroll = () => {
     const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
@@ -15,7 +16,7 @@
       stage.style.setProperty('--vision-opacity', visionOpacity.toFixed(3));
       stage.style.setProperty('--opening-y', `${Math.round(-progress * 100)}px`);
       stage.style.setProperty('--vision-y', `${Math.round(110 - progress * 150)}px`);
-      stage.style.setProperty('--photo-scale', (1.04 + progress * 0.08).toFixed(3));
+      stage.style.setProperty('--photo-scale', (1 + progress * 0.02).toFixed(3));
     }
     ticking = false;
   };
