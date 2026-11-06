@@ -122,3 +122,81 @@
   sizeStitch();
   update();
 })();
+
+// Revelações no scroll para as outras telas e para as páginas de projeto.
+(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const root = document.documentElement;
+  root.classList.add('anim');
+  const all = (selector) => [...document.querySelectorAll(selector)];
+
+  // Títulos: cada linha (separada por <br>) sobe de dentro de uma máscara.
+  all('.process-lead h2, .work-index h2, .project-lead h2, .ecos-cover-copy h2, .ecos-quote, .otimismo-statement p, .sunday-quote p, .page-next strong').forEach((el) => {
+    if (el.querySelector('.line')) return;
+    el.innerHTML = el.innerHTML.split(/<br\s*\/?>/i).map((part) => `<span class="line"><span>${part.trim()}</span></span>`).join('');
+    el.setAttribute('data-lines', '');
+  });
+
+  // Textos e blocos sobem e aparecem em sequência dentro do mesmo grupo.
+  const fades = all([
+    '.project-number', '.project-lead > p', '.process-lead > p', '.process-steps > div',
+    '.photo figcaption', '.ecos-cover-copy > p', '.ecos-concept-body > *', '.ecos-tags li', '.ecos-activation > div',
+    '.sunday-story-copy p', '.sunday-quote cite', '.otimismo-half', '.otimismo-body p', '.otimismo-columns > div',
+    '.otimismo-board-copy > *', '.otimismo-croquis figcaption', '.project-credits', '.page-end-foot', '.reveal-corners',
+  ].join(','));
+  fades.forEach((el) => {
+    const group = [...el.parentElement.children].filter((sib) => fades.includes(sib));
+    el.style.setProperty('--d', `${(group.indexOf(el) * 0.09).toFixed(2)}s`);
+    el.setAttribute('data-fade', '');
+  });
+  all('.reveal-row').forEach((row) => row.setAttribute('data-fade', ''));
+
+  // Fotos são reveladas de baixo para cima, como um tecido sendo puxado.
+  all('.photo-window, .ecos-cover > img, .otimismo-croquis > img, .otimismo-refs img').forEach((el, i) => {
+    el.setAttribute('data-unveil', '');
+    if (el.closest('.otimismo-refs')) el.style.setProperty('--d', `${(i % 4) * 0.1}s`);
+  });
+  all('.otimismo-palette li').forEach((li, i) => {
+    li.setAttribute('data-grow', '');
+    li.style.setProperty('--d', `${i * 0.08}s`);
+  });
+  all('.section-kicker').forEach((el) => el.setAttribute('data-rule', ''));
+
+  // Elementos recortados (clip-path) contam como invisíveis para o observer, então observamos
+  // um elemento-pai sem recorte e marcamos o elemento de verdade quando ele entra na tela.
+  const targets = new Map();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      (targets.get(entry.target) || []).forEach((el) => el.classList.add('is-visible'));
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  all('[data-lines], [data-fade], [data-unveil], [data-grow], [data-rule]').forEach((el) => {
+    const watch = el.matches('[data-unveil], [data-grow]') ? el.parentElement : el;
+    if (!targets.has(watch)) targets.set(watch, []);
+    targets.get(watch).push(el);
+    observer.observe(watch);
+  });
+
+  // Processo: uma fita métrica atravessa a tela e corre com a rolagem.
+  const tape = document.querySelector('.tape');
+  const track = tape && tape.querySelector('.tape-track');
+  if (!track) return;
+  track.innerHTML = Array.from({ length: 150 }, (_, i) => `<span>${i}</span>`).join('');
+  let ticking = false;
+  const move = () => {
+    const r = tape.getBoundingClientRect();
+    const p = Math.min(1, Math.max(0, (window.innerHeight - r.top) / (window.innerHeight + r.height)));
+    track.style.transform = `translate3d(${(-p * Math.max(0, track.scrollWidth - tape.clientWidth) * 0.55).toFixed(1)}px,0,0)`;
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(move);
+    }
+  }, { passive: true });
+  window.addEventListener('resize', move);
+  move();
+})();

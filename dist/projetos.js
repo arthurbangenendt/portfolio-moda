@@ -1,106 +1,110 @@
-// Índice de trabalhos: passar o mouse, focar com o teclado ou tocar mostra a foto do projeto
-// por trás da lista e embaralha o texto da linha. No toque, o primeiro toque mostra e o segundo abre.
+// Índice de trabalhos: com o mouse, um cartão com a foto do projeto segue o cursor, a linha se
+// preenche de marrom e o título rola para a versão em itálico. No toque, cada linha abre direto.
 (() => {
   const reveal = document.querySelector('[data-reveal]');
   if (!reveal) return;
-  const section = reveal.closest('section');
+  const list = reveal.querySelector('.reveal-list');
   const rows = [...reveal.querySelectorAll('.reveal-row')];
   const hint = reveal.querySelector('[data-reveal-hint]');
   const clock = reveal.querySelector('[data-reveal-clock]');
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const touch = window.matchMedia('(hover: none)').matches;
-  const hintText = touch ? 'Toque para ver, toque de novo para abrir' : 'Passe o mouse para ver';
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const hintText = fine ? 'Passe o mouse para ver' : 'Toque para abrir';
   hint.textContent = hintText;
 
-  const bg = document.createElement('div');
-  bg.className = 'reveal-bg';
-  bg.setAttribute('aria-hidden', 'true');
-  const bgBlur = document.createElement('div');
-  bgBlur.className = 'reveal-bg-blur';
-  const bgImg = document.createElement('div');
-  bgImg.className = 'reveal-bg-img';
-  bg.append(bgBlur, bgImg);
-  section.prepend(bg);
-
-  rows.forEach((row) => { new Image().src = row.dataset.image; });
-
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/·';
-  const scramble = (el) => {
-    const text = el.dataset.text ??= el.textContent;
-    if (still) return;
-    cancelAnimationFrame(el._raf);
-    const start = performance.now();
-    const duration = 650;
-    const tick = (now) => {
-      const t = Math.min(1, (now - start) / duration);
-      const fixed = Math.floor(text.length * Math.max(0, (t - 0.25) / 0.75));
-      el.textContent = [...text].map((c, i) => (i < fixed || c === ' ' ? c : CHARS[(Math.random() * CHARS.length) | 0])).join('');
-      if (t < 1) el._raf = requestAnimationFrame(tick);
-    };
-    el._raf = requestAnimationFrame(tick);
-  };
-  const restore = (row) => row.querySelectorAll('[data-scramble]').forEach((el) => {
-    cancelAnimationFrame(el._raf);
-    if (el.dataset.text) el.textContent = el.dataset.text;
+  // O título ganha uma cópia em itálico logo abaixo, que sobe no lugar do original.
+  rows.forEach((row) => {
+    const title = row.querySelector('.reveal-title');
+    const text = title.textContent;
+    title.innerHTML = `<span class="roll"><span>${text}</span><span aria-hidden="true">${text}</span></span>`;
   });
 
   let active = null;
-  let idleTimer;
-  const setIdle = (on) => reveal.classList.toggle('is-idle', on && !still);
-  const armIdle = () => { clearTimeout(idleTimer); idleTimer = setTimeout(() => !active && setIdle(true), 4000); };
+  const card = document.createElement('div');
+  card.className = 'work-preview';
+  card.setAttribute('aria-hidden', 'true');
+  const badge = document.createElement('span');
+  badge.className = 'work-preview-badge';
+  card.append(badge);
+  if (fine) {
+    document.body.append(card);
+    rows.forEach((row) => { new Image().src = row.dataset.image; });
+  }
+
+  // Cada troca de projeto entra por cima da anterior, revelada de baixo para cima.
+  const showImage = (row) => {
+    const layer = document.createElement('div');
+    layer.className = `work-preview-img${row.dataset.fit === 'contain' ? ' is-contain' : ''}`;
+    layer.style.backgroundImage = `url("${row.dataset.image}")`;
+    if (row.dataset.pos) layer.style.backgroundPosition = row.dataset.pos;
+    card.insertBefore(layer, badge);
+    requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('is-in')));
+    const layers = card.querySelectorAll('.work-preview-img');
+    if (layers.length > 3) layers[0].remove();
+    badge.textContent = `${row.querySelector('.reveal-n').textContent} / ${row.querySelector('.reveal-cat').textContent}`;
+  };
 
   const activate = (row) => {
-    setIdle(false);
-    clearTimeout(idleTimer);
     if (row === active) return;
-    if (active) { active.classList.remove('is-active'); restore(active); }
+    if (active) active.classList.remove('is-active');
     active = row;
     row.classList.add('is-active');
     reveal.classList.add('has-active');
-    section.classList.add('is-revealing');
-    const contain = row.dataset.fit === 'contain';
-    bg.classList.toggle('is-contain', contain);
-    // Recomeça o zoom de entrada a cada troca de projeto.
-    bgImg.style.transition = 'none';
-    bgImg.style.transform = still ? 'none' : 'scale(1.18)';
-    bgImg.style.backgroundImage = `url("${row.dataset.image}")`;
-    bgBlur.style.backgroundImage = contain ? bgImg.style.backgroundImage : '';
-    bgImg.style.backgroundPosition = contain ? '' : row.dataset.pos || 'center';
-    requestAnimationFrame(() => requestAnimationFrame(() => { bgImg.style.transition = ''; bgImg.style.transform = ''; }));
-    row.querySelectorAll('[data-scramble]').forEach(scramble);
-    hint.textContent = touch ? 'Toque de novo para abrir ↗' : 'Clique para abrir ↗';
+    if (fine) {
+      showImage(row);
+      card.classList.add('is-shown');
+    }
+    hint.textContent = 'Clique para abrir ↗';
   };
 
   const deactivate = () => {
     if (!active) return;
     active.classList.remove('is-active');
-    restore(active);
     active = null;
     reveal.classList.remove('has-active');
-    section.classList.remove('is-revealing');
+    card.classList.remove('is-shown');
     hint.textContent = hintText;
-    armIdle();
   };
 
-  rows.forEach((row) => {
-    row.addEventListener('mouseenter', () => activate(row));
-    row.addEventListener('focus', () => activate(row));
-    row.addEventListener('click', (event) => {
-      if (touch && row !== active) {
-        event.preventDefault();
-        activate(row);
-      }
+  // O cartão persegue o cursor com atraso e inclina conforme a velocidade, como tecido no ar.
+  let x = 0;
+  let y = 0;
+  let tx = 0;
+  let ty = 0;
+  let raf = null;
+  const loop = () => {
+    x += (tx - x) * 0.13;
+    y += (ty - y) * 0.13;
+    const tilt = still ? 0 : Math.max(-9, Math.min(9, (tx - x) * 0.05));
+    card.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) translate(-50%,-50%) rotate(${tilt.toFixed(2)}deg)`;
+    raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(loop) : null;
+  };
+  if (fine) {
+    list.addEventListener('mouseenter', (event) => {
+      x = tx = event.clientX;
+      y = ty = event.clientY;
+      loop();
     });
-  });
-  reveal.querySelector('.reveal-list').addEventListener('mouseleave', deactivate);
+    list.addEventListener('mousemove', (event) => {
+      tx = event.clientX;
+      ty = event.clientY;
+      if (still) { x = tx; y = ty; }
+      if (!raf) raf = requestAnimationFrame(loop);
+    });
+    rows.forEach((row) => row.addEventListener('mouseenter', () => activate(row)));
+    list.addEventListener('mouseleave', deactivate);
+  }
+  rows.forEach((row) => row.addEventListener('focus', () => {
+    // Pelo teclado, o cartão aparece ao lado da linha focada.
+    if (fine && !list.matches(':hover')) {
+      const r = row.getBoundingClientRect();
+      x = tx = r.right - card.offsetWidth * 0.7;
+      y = ty = r.top + r.height / 2;
+      loop();
+    }
+    activate(row);
+  }));
   reveal.addEventListener('focusout', (event) => { if (!reveal.contains(event.relatedTarget)) deactivate(); });
-  document.addEventListener('click', (event) => { if (touch && !reveal.contains(event.target)) deactivate(); });
-
-  // Só anima enquanto a seção está na tela.
-  new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) armIdle();
-    else { clearTimeout(idleTimer); setIdle(false); }
-  }).observe(reveal);
 
   const time = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' });
   const updateClock = () => {
