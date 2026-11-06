@@ -33,25 +33,36 @@
           <div class="hero-content">
             <div class="hero-opening">
               <p class="eyebrow light">Ana Clara / Moda</p>
-              <h1 id="hero-title">A forma<br />começa<br /><em>aqui.</em></h1>
+              <h1 id="hero-title"><span class="line"><span>A forma</span></span><span class="line"><span>começa</span></span><span class="line"><span><em>aqui.</em></span></span></h1>
               <p class="hero-signature">Ana Clara</p>
               <a href="#sobre" class="hero-scroll">Role para conhecer ↘</a>
             </div>
           </div>
           <span class="hero-side-note">Retrato / Ana Clara</span>
+          <div class="hero-marquee" aria-hidden="true">
+            <div class="hero-marquee-track">
+              <span>Ana Clara</span><i>✦</i><span><em>Design de Moda</em></span><i>✦</i><span>Senac São Paulo</span><i>✦</i><span><em>Modelagem</em></span><i>✦</i><span>Moulage</span><i>✦</i><span><em>Alfaiataria</em></span><i>✦</i><span>Portfólio 2026</span><i>✦</i>
+              <span>Ana Clara</span><i>✦</i><span><em>Design de Moda</em></span><i>✦</i><span>Senac São Paulo</span><i>✦</i><span><em>Modelagem</em></span><i>✦</i><span>Moulage</span><i>✦</i><span><em>Alfaiataria</em></span><i>✦</i><span>Portfólio 2026</span><i>✦</i>
+            </div>
+          </div>
         </div>
       </section>
 
       <section class="about-section section-shell" id="sobre" aria-labelledby="about-title">
+        <p class="about-ghost" aria-hidden="true"><span>Ana Clara — Ana Clara — Ana Clara — Ana Clara — </span></p>
         <div class="section-kicker"><span>01 / Sobre</span><span>Design de Moda / Senac</span></div>
         <div class="about-grid">
-          <div class="about-text">
-            <h2 id="about-title">Quem é a<br /><em>Ana Clara?</em></h2>
+          <div class="about-text" data-words>
+            <h2 id="about-title" data-lines><span class="line"><span>Quem é a</span></span><span class="line"><span><em>Ana Clara?</em></span></span></h2>
             <p>A Ana Clara é uma mulher de 21 anos que, desde pequena, sonhou alto. Mesmo não tendo recursos, sentia que tudo que ela sonhava em conquistar tinha um pedaço dela. Com tantos sonhos, ela escolheu seguir seu lado artístico e começou a fazer Design de Moda na Universidade do Senac. Porém, isso não surgiu do nada. Desde sempre, ela gostava de desenhar, mexer com tinta e criar. Sempre se esforçava para tirar nota máxima em Artes na escola, porque era algo que ela gostava muito.</p>
             <p>Hoje em dia, ela está conhecendo mais esse mundo da moda e se apaixonando por vários caminhos que envolvem a moda. E está disposta a conhecer e aprender ainda mais o seu conhecimento, trabalhando em um lugar que te faça crescer.</p>
           </div>
           <figure class="about-photo">
-            <div class="about-photo-window"><img src="assets/ana-clara-retrato-4k.jpg" alt="Retrato de Ana Clara" loading="lazy" /></div>
+            <div class="about-photo-frame">
+              <div class="about-photo-window"><img src="assets/ana-clara-retrato-4k.jpg" alt="Retrato de Ana Clara" loading="lazy" /></div>
+              <svg class="about-stitch" aria-hidden="true"><defs><mask id="costura-mask"><rect class="stitch-mask" pathLength="1" fill="none" stroke="#fff" stroke-width="6" /></mask></defs><rect class="stitch-line" fill="none" mask="url(#costura-mask)" /></svg>
+              <div class="about-tag" aria-hidden="true"><b>AC.</b><span>Ana Clara</span><span>21 anos</span><span>Design de Moda</span><span>Senac / SP</span><small>Feito à mão com sonho</small></div>
+            </div>
             <figcaption><span>Retrato</span><span>Ana Clara</span></figcaption>
           </figure>
         </div>
@@ -93,5 +104,6 @@
     <script src="script.js"></script>
     <script src="folhas.js"></script>
     <script src="projetos.js"></script>
+    <script src="animacoes.js"></script>
   </body>
 </html>

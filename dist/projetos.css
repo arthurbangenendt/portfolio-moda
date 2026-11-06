@@ -229,3 +229,63 @@ body:not(.project-page),.page-blazer,.page-calca,.page-blazer .page-masthead,.pa
 .about-photo figcaption{border-top:1px solid var(--ink);padding-top:.75rem;margin-top:.75rem;display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
 @media(max-width:800px){.about-section{padding-top:6rem;padding-bottom:6rem}.about-grid{display:block;padding-top:3.5rem}.about-photo{margin-top:3.5rem;max-width:420px}}
 @media(max-width:560px){.about-text h2{font-size:15vw;margin-bottom:2rem}}
+
+/* Animações editoriais (animacoes.js). Os estados iniciais só valem com a classe .anim,
+   então sem JavaScript ou com movimento reduzido tudo aparece parado e visível. */
+@property --intro-scale{syntax:'<number>';inherits:false;initial-value:1.04}
+.line{display:block;overflow:hidden;padding-bottom:.12em;margin-bottom:-.12em}
+.line>span{display:block}
+
+/* Hero: cortina na foto, título em linhas, letreiro de desfile. */
+.hero-media{transform:translate3d(var(--mx,0px),var(--my,0px),0) scale(calc(var(--photo-scale,1) * var(--intro-scale)));transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.anim .hero-media{clip-path:inset(50% 0 50% 0);--intro-scale:1.3;transition:clip-path 1.6s cubic-bezier(.77,0,.18,1),--intro-scale 2.6s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.anim.is-loaded .hero-media{clip-path:inset(0 0 0 0);--intro-scale:1.04}
+.anim .hero-opening h1 .line>span{transform:translate3d(0,110%,0);transition:transform 1.2s cubic-bezier(.19,1,.22,1)}
+.anim.is-loaded .hero-opening h1 .line>span{transform:none}
+.anim.is-loaded .hero-opening h1 .line:nth-child(1)>span{transition-delay:.9s}
+.anim.is-loaded .hero-opening h1 .line:nth-child(2)>span{transition-delay:1.02s}
+.anim.is-loaded .hero-opening h1 .line:nth-child(3)>span{transition-delay:1.14s}
+.hero-opening h1 .line:nth-child(1){transform:translate3d(calc(var(--hero-p,0) * -9vw),0,0)}
+.hero-opening h1 .line:nth-child(3){transform:translate3d(calc(var(--hero-p,0) * 12vw),0,0)}
+.anim .hero-opening .eyebrow,.anim .hero-signature,.anim .hero-scroll,.anim .hero-side-note,.anim .hero-marquee{opacity:0;translate:0 18px;transition:opacity 1s ease,translate 1.2s cubic-bezier(.19,1,.22,1)}
+.anim.is-loaded .hero-opening .eyebrow{opacity:1;translate:0 0;transition-delay:.75s}
+.anim.is-loaded .hero-signature{opacity:1;translate:0 0;transition-delay:1.45s}
+.anim.is-loaded .hero-scroll,.anim.is-loaded .hero-side-note,.anim.is-loaded .hero-marquee{opacity:1;translate:0 0;transition-delay:1.7s}
+.hero-opening{bottom:calc(6vh + 58px)}
+.hero-side-note{bottom:calc(3vh + 58px)}
+.hero-marquee{position:absolute;left:0;right:0;bottom:0;z-index:2;overflow:hidden;border-top:1px solid rgba(247,236,203,.3);background:rgba(26,16,11,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:1rem 0;white-space:nowrap}
+.hero-marquee-track{display:inline-flex;align-items:center;animation:desfile 40s linear infinite}
+.hero-marquee span{font:400 1.05rem Georgia,serif;letter-spacing:.2em;text-transform:uppercase}
+.hero-marquee em{color:var(--yellow-soft);text-transform:none;letter-spacing:.02em;font-size:1.25rem}
+.hero-marquee i{font-style:normal;color:var(--yellow);margin:0 1.8rem;font-size:.8rem}
+@keyframes desfile{to{transform:translate3d(-50%,0,0)}}
+
+/* Sobre: nome vazado ao fundo, título em linhas, texto que acende, foto costurada e etiqueta. */
+.about-section{position:relative;overflow:hidden}
+.about-section>*:not(.about-ghost){position:relative;z-index:1}
+.about-ghost{position:absolute;left:0;top:50%;margin:0;white-space:nowrap;pointer-events:none;z-index:0;font:italic 400 clamp(9rem,22vw,26rem)/1 Georgia,serif;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(74,44,23,.2);translate:0 -50%}
+.about-ghost span{display:inline-block;will-change:transform}
+.anim [data-lines] .line>span{transform:translate3d(0,110%,0) rotate(3deg);transform-origin:left bottom;transition:transform 1.3s cubic-bezier(.19,1,.22,1)}
+.anim [data-lines].is-visible .line>span{transform:none}
+.anim [data-lines].is-visible .line:nth-child(2)>span{transition-delay:.14s}
+.anim [data-words] .w{opacity:.16;transition:opacity .45s ease,color .45s ease}
+.anim [data-words] .w.on{opacity:1}
+.about-photo-frame{position:relative}
+.about-photo-window{position:relative}
+.anim .about-photo-window{clip-path:inset(calc((1 - var(--reveal,0)) * 100%) 0 0 0)}
+.about-photo-window img{will-change:transform}
+.about-stitch{position:absolute;inset:-12px;width:calc(100% + 24px);height:calc(100% + 24px);pointer-events:none;overflow:visible}
+.stitch-line{stroke:var(--brown);stroke-width:1.4;stroke-dasharray:7 6;opacity:.75}
+.stitch-mask{stroke-dasharray:1 1;stroke-dashoffset:1}
+html:not(.anim) .stitch-mask{stroke-dashoffset:0}
+.about-tag{position:absolute;left:-38px;top:-26px;z-index:3;width:132px;padding:1.4rem .9rem .9rem;background:var(--on-dark);color:var(--brown-deep);box-shadow:0 14px 30px rgba(42,25,14,.28);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.7;transform-origin:50% 6px;rotate:-8deg;animation:etiqueta 4.5s ease-in-out infinite}
+.about-tag:before{content:"";position:absolute;top:7px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--butter);box-shadow:inset 0 1px 2px rgba(0,0,0,.35)}
+.about-tag b{display:block;font:400 1.5rem/1 Georgia,serif;letter-spacing:-.08em;text-transform:none;margin-bottom:.5rem;border-bottom:1px solid rgba(42,25,14,.3);padding-bottom:.45rem}
+.about-tag span{display:block}
+.about-tag small{display:block;margin-top:.55rem;padding-top:.45rem;border-top:1px dashed rgba(42,25,14,.4);font:italic .72rem Georgia,serif;letter-spacing:0;text-transform:none}
+.anim .about-tag{opacity:0;translate:0 -30px;transition:opacity .8s ease .5s,translate 1.1s cubic-bezier(.19,1,.22,1) .5s}
+.anim .about-photo-frame.is-visible .about-tag{opacity:1;translate:0 0}
+@keyframes etiqueta{0%,100%{rotate:-8deg}50%{rotate:-2deg}}
+@media(max-width:800px){.about-tag{left:auto;right:-10px}}
+@media(max-width:560px){.hero-opening{bottom:calc(8vh + 50px)}.hero-marquee{padding:.8rem 0}.hero-marquee span{font-size:.85rem}.hero-marquee em{font-size:1rem}.hero-marquee i{margin:0 1.1rem}.about-tag{width:112px;right:-4px;top:-30px}.about-ghost{font-size:40vw}}
+@media(prefers-reduced-motion:reduce){.hero-marquee-track,.about-tag{animation:none}.hero-opening h1 .line{transform:none}}
