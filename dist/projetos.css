@@ -211,3 +211,21 @@ body:not(.project-page),.page-blazer,.page-calca,.page-blazer .page-masthead,.pa
 .process-section{background-image:var(--couro),linear-gradient(180deg,var(--butter),var(--butter-low));background-blend-mode:multiply,normal}
 .work-index{background-image:var(--couro),linear-gradient(180deg,var(--butter-deep),var(--butter-deep-low));background-blend-mode:multiply,normal}
 .project-blazer{background-image:var(--couro),linear-gradient(180deg,var(--butter-soft),var(--butter) 55%,var(--butter-low));background-blend-mode:multiply,normal}
+
+/* Hero só com a abertura sobre o retrato novo; a biografia ganhou a tela "Sobre". */
+.hero{height:130vh}
+.hero-media{background-image:url('assets/ana-clara-hero.jpg');background-size:cover;background-position:center 30%}
+.hero-shade{background:linear-gradient(90deg,rgba(26,16,11,.82),rgba(26,16,11,.45) 40%,rgba(26,16,11,.05) 85%),linear-gradient(0deg,rgba(26,16,11,.5),transparent 45%)}
+@media(max-width:560px){.hero{height:120vh}.hero-media{background-position:center 28%}}
+
+.about-section{padding-top:8rem;padding-bottom:9rem;background-image:var(--couro),linear-gradient(180deg,var(--butter),var(--butter-low));background-blend-mode:multiply,normal}
+.about-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:7vw;align-items:start;padding-top:5rem}
+.about-text h2{font:400 clamp(4rem,8vw,9rem)/.96 Georgia,serif;letter-spacing:-.07em;margin:0 0 3.5rem}
+.about-text p{max-width:620px;font-size:clamp(1rem,1.3vw,1.3rem);line-height:1.6;text-wrap:pretty}
+.about-text p+p{margin-top:1.4rem}
+.about-photo{margin:0}
+.about-photo-window{overflow:hidden;aspect-ratio:.72;background:var(--butter-deep)}
+.about-photo-window img{height:100%;object-fit:cover;object-position:center 30%}
+.about-photo figcaption{border-top:1px solid var(--ink);padding-top:.75rem;margin-top:.75rem;display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:800px){.about-section{padding-top:6rem;padding-bottom:6rem}.about-grid{display:block;padding-top:3.5rem}.about-photo{margin-top:3.5rem;max-width:420px}}
+@media(max-width:560px){.about-text h2{font-size:15vw;margin-bottom:2rem}}
